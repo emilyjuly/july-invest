@@ -1,8 +1,15 @@
 <script setup lang="ts">
+import { useStore } from "~/stores";
+
+const store = useStore();
+
+store.getQuoteList()
 </script>
 
 <template>
-    <NuxtPage/>
+    <NuxtLayout>
+        <NuxtPage/>
+    </NuxtLayout>
     <Image src="luz-azul.png" alt="Image" width="1000" class="luz-azul-top-left"/>
     <Image src="luz-azul.png" alt="Image" width="1000" class="luz-azul-middle-right"/>
 </template>

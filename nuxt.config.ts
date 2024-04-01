@@ -2,7 +2,8 @@
 export default defineNuxtConfig({
     devtools: {enabled: true},
     modules: [
-        'nuxt-primevue'
+        'nuxt-primevue',
+        '@pinia/nuxt'
     ],
     primevue: {
         usePrimeVue: true
@@ -13,4 +14,9 @@ export default defineNuxtConfig({
         'primeflex/primeflex.css',
         '~/assets/scss/main.scss'
     ],
+    runtimeConfig: {
+        public: {
+            API_TOKEN: process.env.API_TOKEN,
+        }
+    }
 })
