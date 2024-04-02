@@ -7,6 +7,7 @@ export const useStore = defineStore('store', {
         quoteListStock: [] as Stock[],
         quoteListFund: [] as Stock[],
         quoteListBDRs: [] as Stock[],
+        dataTable: [] as Stock[],
     }),
     actions: {
         async getQuoteList(): Promise<void> {
@@ -32,5 +33,13 @@ export const useStore = defineStore('store', {
         filterQuotes(type: string | null, stocks) {
             return stocks.filter(quote => quote.type === type)
         },
+        getDataTable(): void {
+            this.dataTable = []
+            for (let i = 0; i < 3; i ++) {
+                this.dataTable.push(this.quoteListFund[i])
+                this.dataTable.push(this.quoteListBDRs[i])
+                this.dataTable.push(this.quoteListStock[i])
+            }
+        }
     }
 })

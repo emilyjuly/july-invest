@@ -1,15 +1,28 @@
 <script setup>
+import { useStore } from "~/stores/index.ts";
+
+const store = useStore();
 </script>
 
 <template>
-    <div class="flex flex-column align-items-center gap-5 mt-8 title">
-        <Image src="/coins.png" alt="" width="100" class="bottom-right-coin"/>
-        <Image src="/coins.png" alt="" width="150" class="top-left-coin"/>
-        <span>ACCESS QUOTES</span>
-        <span>FOR STOCKS, FUNDS,</span>
-        <span>AND BDRs</span>
-        <span class="subtitle">Your platform to consult quotes on financial market assets.</span>
-        <span class="subtitle">Quickly and intuitively access the information an investor needs!</span>
+    <div>
+        <div class="flex flex-column align-items-center gap-5 mt-8 title">
+            <Image src="/coins.png" alt="" width="100" class="bottom-right-coin"/>
+            <Image src="/coins.png" alt="" width="150" class="top-left-coin"/>
+            <span>ACCESS QUOTES</span>
+            <span>FOR STOCKS, FUNDS,</span>
+            <span>AND BDRs</span>
+            <span class="subtitle">Your platform to consult quotes on financial market assets.</span>
+            <span class="subtitle">Quickly and intuitively access the information an investor needs!</span>
+        </div>
+        <div class="mt-8 flex justify-content-center gap-8">
+            <Card :length="store.quoteListBDRs.length" name="bdrs" />
+            <Card :length="store.quoteListFund.length" name="funds" />
+            <Card :length="store.quoteListStock.length" name="stocks" />
+        </div>
+        <div class="mt-8 flex justify-content-center">
+            <Table />
+        </div>
     </div>
 </template>
 
@@ -38,7 +51,7 @@
     z-index: -1;
     right: 300px;
     bottom: 300px;
-    filter: brightness(50%) saturate(100%);
+    filter: brightness(15%) saturate(100%) contrast(100%) ;
     transform: scaleX(-1);
     animation: moveCoinTranslate 3s infinite alternate;
 }
@@ -48,7 +61,7 @@
     z-index: -1;
     left: 260px;
     top: 160px;
-    filter: brightness(70%) saturate(100%);
+    filter: brightness(20%) saturate(100%) contrast(100%) ;
     animation: moveCoin 3s infinite alternate;
 }
 
