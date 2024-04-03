@@ -1,84 +1,178 @@
 <script setup lang="ts">
-import { useStore } from "~/stores";
+import {useStore} from "~/stores";
 
 const store = useStore();
-store.getDataTable()
+store.getDataTable();
+
+const getSeverity = (type: string) => {
+    switch (type) {
+        case 'fund':
+            return 'info';
+            break;
+        case 'stock':
+            return 'warning';
+            break;
+        case 'bdr':
+            return 'success';
+            break;
+        default:
+            return 'primary';
+    }
+}
+
+const isDown = (value: number) => {
+    return value < 0
+}
 
 </script>
 
 
 <template>
-    <div>
-        <DataView :value="store.dataTable">
+    <div style="width: 70%">
+        <DataView :value="store.dataTable" v-if="store.dataTable[0]" unstyled>
+            <template #header>
+                <span class="top-title">Top markets</span>
+            </template>
             <template #list="slotProps">
-                <div class="container">
-                    <div v-for="(item, index) in slotProps.items" :key="index">
-                        <div class="grid-container">
-                            <div class="image-container">
-                                <img class="image" v-if="item" :src="item.logo" :alt="item.name" />
-                            </div>
-                            <div class="name-container">
-                                <span class="font-medium text-secondary text-sm">{{ item && item.type }}</span>
-                                <span class="font-medium text-secondary text-sm">{{
-                                        item ? item.sector : 'Not available'
-                                    }}</span>
-                                <span class="text-lg font-medium text-900 mt-2">{{ item && item.name }}</span>
-                            </div>
-                            <div
-                                class="flex flex-column md:flex-row justify-content-between md:align-items-center flex-1 gap-4">
-                                <div
-                                    class="flex flex-row md:flex-column justify-content-between align-items-start gap-2">
-                                    <span class="font-medium text-secondary text-sm">{{ item && item.change }}</span>
-                                    <span class="font-medium text-secondary text-sm">{{ item ? item.close : 'Not available' }}</span>
-                                </div>
-                            </div>
-                            <div class="flex flex-column md:flex-row justify-content-between md:align-items-center flex-1 gap-4">
-                                <div
-                                    class="flex flex-row md:flex-column justify-content-between align-items-start gap-2">
-                                    <span class="font-medium text-secondary text-sm">{{ item && item.market_cap }}</span>
-                                    <span class="font-medium text-secondary text-sm">{{ item ? item.stock : 'Not available' }}</span>
-                                </div>
-                            </div>
+                <div v-for="(item, index) in slotProps.items" :key="index" class="grid-container">
+                    <div class="name-container">
+                        <div class="image-container">
+                            <img class="image" v-if="item" :src="item.logo" :alt="item.name"/>
                         </div>
+                        <div class="infos">
+                            <div class="name-infos">
+                                <span class="stock">{{ item && item.stock }}</span>
+                                <span class="name">{{ item && item.name }}</span>
+                                <span class="sector">{{ item && item.sector }}</span>
+                            </div>
+                            <Tag :severity="getSeverity(item.type)" :value="item.type" v-if="item"
+                                 style="width: 50px; margin-top: 10px;"/>
+                        </div>
+                    </div>
+                    <div class="change-container">
+                        <Image src="/down.png" alt="Imagem de gráfico caindo" width="20"
+                               v-if="isDown(item && item.change)"/>
+                        <Image src="/high.png" alt="Imagem de gráfico subindo" width="20"
+                               v-if="!isDown(item && item.change)"/>
+                        <span class="change" v-if="item"
+                              :class="{ 'red-text': isDown(item && item.change), 'green-text': !isDown(item && item.change) }">{{
+                                item && `${item.change}%`
+                            }}</span>
+                    </div>
+                    <div class="close-container">
+                        <strong>Close</strong>
+                        <span class="font-medium text-secondary text-sm">{{ item && `R$ ${item.close}` }}</span>
                     </div>
                 </div>
             </template>
         </DataView>
+        <div v-else>
+            <div class="top">
+                <span class="top-title">Top markets</span>
+            </div>
+            <div class="grid-container" v-for="item in 6" :key="item">
+                <Skeleton width="100%" height="100px" class="m-0">{{ item }}</Skeleton>
+            </div>
+        </div>
     </div>
 </template>
 
 <style scoped>
 
-.container {
-    display: grid;
-    column-gap: 50px;
-    width: 100%;
+.top {
+    background-color: rgba(42, 42, 57, 0.51);
+    border-top: 3px solid #3c3c56;
+    padding: 15px;
+    border-radius: 10px 10px 0 0;
+}
+
+.top-title {
+    font-size: 20px;
+    font-weight: 600;
 }
 
 .grid-container {
     display: flex;
     align-items: center;
-    padding: 10px;
-    gap: 50px;
-    border-bottom: 1px solid #3c3c56;
+    border-top: 3px solid #3c3c56;
+    justify-content: space-between;
+    gap: 100px;
     background-color: rgba(42, 42, 57, 0.51);
-    width: 100%;
-}
-
-.image-container {
-    width: 4rem;
-    position: relative;
-}
-
-.image {
-    display: flex;
-    width: 100%;
 }
 
 .name-container {
     display: flex;
-    flex-direction: column;
     justify-content: space-between;
+    width: 30%;
+    gap: 20px;
+}
+
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+}
+
+.image {
+    width: 90%;
+}
+
+.infos {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    gap: 3px;
+    padding: 10px;
+}
+
+.name-infos {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.stock {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+.name {
+    font-size: 12px;
+    color: #989898;
+}
+
+.sector {
+    font-weight: 600;
+}
+
+.change-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 20%;
+}
+
+.change {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.red-text {
+    color: #dc4040;
+}
+
+.green-text {
+    color: green;
+}
+
+.close-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     gap: 5px;
+    width: 10%;
 }
 </style>

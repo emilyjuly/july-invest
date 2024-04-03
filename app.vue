@@ -12,6 +12,7 @@ store.getQuoteList()
     </NuxtLayout>
     <Image src="luz-azul.png" alt="Image" width="1000" class="luz-azul-top-left"/>
     <Image src="luz-azul.png" alt="Image" width="1000" class="luz-azul-middle-right"/>
+    <Image src="luz-azul.png" alt="Image" width="1000" class="luz-azul-bottom-left"/>
 </template>
 
 <style scoped>
@@ -26,6 +27,14 @@ store.getQuoteList()
     position: absolute;
     bottom: -300px;
     right: 0;
+    z-index: -1;
+    opacity: 0.2;
+}
+
+.luz-azul-bottom-left {
+    position: absolute;
+    left: -500px;
+    bottom: -1400px;
     z-index: -1;
     opacity: 0.2;
 }

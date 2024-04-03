@@ -35,7 +35,7 @@ export const useStore = defineStore('store', {
         },
         getDataTable(): void {
             this.dataTable = []
-            for (let i = 0; i < 3; i ++) {
+            for (let i = 0; i < 2; i ++) {
                 this.dataTable.push(this.quoteListFund[i])
                 this.dataTable.push(this.quoteListBDRs[i])
                 this.dataTable.push(this.quoteListStock[i])
