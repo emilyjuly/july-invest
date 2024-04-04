@@ -3,7 +3,7 @@
 
 <template>
     <div class="flex justify-content-between align-items-center mt-5">
-        <span class="page-title">July Invest</span>
+        <span class="page-title cursor-pointer" @click="$router.push(`/`)">July Invest</span>
         <MenuBarCustom />
     </div>
 </template>

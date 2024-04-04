@@ -2,7 +2,6 @@
 import {useStore} from "~/stores";
 
 const store = useStore();
-store.getDataTable();
 
 const getSeverity = (type: string) => {
     switch (type) {
@@ -23,7 +22,6 @@ const getSeverity = (type: string) => {
 const isDown = (value: number) => {
     return value < 0
 }
-
 </script>
 
 
@@ -31,7 +29,9 @@ const isDown = (value: number) => {
     <div style="width: 70%">
         <DataView :value="store.dataTable" v-if="store.dataTable[0]" unstyled>
             <template #header>
-                <span class="top-title">Top markets</span>
+                <div class="top">
+                    <span class="top-title">Top markets</span>
+                </div>
             </template>
             <template #list="slotProps">
                 <div v-for="(item, index) in slotProps.items" :key="index" class="grid-container">
@@ -67,7 +67,7 @@ const isDown = (value: number) => {
             </template>
         </DataView>
         <div v-else>
-            <div class="top">
+            <div>
                 <span class="top-title">Top markets</span>
             </div>
             <div class="grid-container" v-for="item in 6" :key="item">
@@ -77,11 +77,12 @@ const isDown = (value: number) => {
     </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+@import '@/assets/scss/main.scss';
 
 .top {
-    background-color: rgba(42, 42, 57, 0.51);
-    border-top: 3px solid #3c3c56;
+    background-color: $bg-gray;
+    border-top: 3px solid $border-gray;
     padding: 15px;
     border-radius: 10px 10px 0 0;
 }
@@ -94,10 +95,10 @@ const isDown = (value: number) => {
 .grid-container {
     display: flex;
     align-items: center;
-    border-top: 3px solid #3c3c56;
+    border-top: 3px solid $border-gray;
     justify-content: space-between;
     gap: 100px;
-    background-color: rgba(42, 42, 57, 0.51);
+    background-color: $bg-gray;
 }
 
 .name-container {
@@ -140,7 +141,7 @@ const isDown = (value: number) => {
 
 .name {
     font-size: 12px;
-    color: #989898;
+    color: $text-gray;
 }
 
 .sector {
@@ -161,11 +162,11 @@ const isDown = (value: number) => {
 }
 
 .red-text {
-    color: #dc4040;
+    color: $red;
 }
 
 .green-text {
-    color: green;
+    color: $green;
 }
 
 .close-container {

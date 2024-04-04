@@ -21,6 +21,8 @@ const props = defineProps({
 </template>
 
 <style lang="scss" scoped>
+@import '@/assets/scss/main.scss';
+
 .card {
     display: flex;
     flex-direction: column;
@@ -28,16 +30,16 @@ const props = defineProps({
     justify-content: center;
     gap: 5px;
     cursor: pointer;
-    border: 3px solid #3c3c56;
+    border: 3px solid $border-gray;
     border-radius: 15px;
     width: 300px;
     height: 120px;
-    background-color: rgba(42, 42, 57, 0.51);
+    background-color: $bg-gray;
     transition: 0.2s;
 }
 
 .card:hover {
-    background-color: rgba(64, 64, 86, 0.51);
+    background-color: $bg-gray-hover;
     transition: 0.2s;
 }
 
@@ -48,7 +50,7 @@ const props = defineProps({
 }
 
 .subtitle {
-    color: #838383;
+    color: $text-gray;
 }
 
 .description {

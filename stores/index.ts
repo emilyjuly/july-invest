@@ -40,6 +40,6 @@ export const useStore = defineStore('store', {
                 this.dataTable.push(this.quoteListBDRs[i])
                 this.dataTable.push(this.quoteListStock[i])
             }
-        }
+        },
     }
 })
