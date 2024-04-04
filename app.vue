@@ -38,4 +38,12 @@ store.getQuoteList()
     z-index: -1;
     opacity: 0.2;
 }
+
+@media (max-width: 768px) {
+    .luz-azul-top-left,
+    .luz-azul-middle-right,
+    .luz-azul-bottom-left {
+        display: none;
+    }
+}
 </style>

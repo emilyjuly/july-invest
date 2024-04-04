@@ -51,27 +51,43 @@
     flex-direction: column;
     background-color: $bg-gray;
     padding: 50px;
+    @media (max-width: 767.98px) {
+        padding: 40px 10px 40px 10px;
+        margin-top: 20px;
+    }
 }
 
 .footer {
     display: flex;
     width: 100%;
     justify-content: space-between;
+    @media (max-width: 767.98px) {
+        flex-direction: column;
+    }
 }
 
 .logo {
     font-size: 20px;
     font-weight: bold;
     letter-spacing: 0.1rem;
+    @media (max-width: 767.98px) {
+        font-size: 15px;
+    }
 }
 
 .text {
     font-size: 12px;
     text-decoration: none;
     color: $white;
+    @media (max-width: 767.98px) {
+        font-size: 10px;
+    }
 }
 
 .title {
     font-size: 15px;
+    @media (max-width: 767.98px) {
+        font-size: 10px;
+    }
 }
 </style>

@@ -68,7 +68,7 @@ const setChartOptions = () => {
 
 <template>
     <div>
-        <div class="flex flex-column align-items-center gap-5 mt-8 title">
+        <div class="title">
             <Image src="/coins.png" alt="" width="100" class="bottom-right-coin"/>
             <Image src="/coins.png" alt="" width="150" class="top-left-coin"/>
             <Image src="/coins.png" alt="" width="150" class="middle-right-coin"/>
@@ -79,7 +79,7 @@ const setChartOptions = () => {
             <span class="subtitle">Quickly and intuitively access the information an investor needs!</span>
         </div>
         <div class="mt-8 flex flex-column justify-content-center gap-8">
-            <div class="flex justify-content-center" style="gap: 8rem">
+            <div class="cards-container">
                 <Card :length="store.quoteListBDRs.length" name="bdrs" />
                 <Card :length="store.quoteListFund.length" name="funds" />
                 <Card :length="store.quoteListStock.length" name="stocks" />
@@ -87,7 +87,7 @@ const setChartOptions = () => {
             <div class="flex justify-content-center">
                 <Table />
             </div>
-            <div class="flex justify-content-between gap-8 p-8">
+            <div class="chart-container">
                 <div class="flex flex-column gap-3">
                     <span class="find-the-price">Find the price</span>
                     <span class="of-the-asset">of the asset</span>
@@ -96,7 +96,7 @@ const setChartOptions = () => {
                     <Button label="Funds" outlined @click="$router.push(`/funds`)" />
                     <Button label="Stocks" outlined @click="$router.push(`/stocks`)" />
                 </div>
-                <Chart type="line" :data="chartData" :options="chartOptions" style="width: 60%" />
+                <Chart type="line" :data="chartData" :options="chartOptions" class="chart" />
             </div>
         </div>
     </div>
@@ -106,12 +106,22 @@ const setChartOptions = () => {
 @import '@/assets/scss/main.scss';
 
 .title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 6rem;
     font-size: 90px;
     font-weight: 600;
     background: $gradient-blue;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    @media (max-width: 767.98px) {
+        font-size: 50px;
+        align-items: flex-start;
+        gap: 1rem;
+    }
 }
 
 .subtitle {
@@ -120,6 +130,9 @@ const setChartOptions = () => {
     color: $white;
     letter-spacing: 0.1rem;
     margin-top: -20px;
+    @media (max-width: 767.98px) {
+        margin-top: 0;
+    }
 }
 
 .bottom-right-coin {
@@ -139,6 +152,9 @@ const setChartOptions = () => {
     top: 160px;
     filter: brightness(20%) saturate(100%) contrast(100%) ;
     animation: moveCoin 3s infinite alternate;
+    @media (max-width: 767.98px) {
+        left: 160px;
+    }
 }
 
 .middle-right-coin {
@@ -169,6 +185,36 @@ const setChartOptions = () => {
     font-size: 20px;
     color: $text-gray;
     letter-spacing: 2px;
+}
+
+.cards-container {
+    display: flex;
+    justify-content: center;
+    gap: 8rem;
+    @media (max-width: 767.98px) {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+}
+
+.chart-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 60px;
+    @media (max-width: 767.98px) {
+        flex-direction: column;
+        padding: 0;
+        gap: 40px;
+    }
+}
+
+.chart {
+    width: 60%;
+    @media (max-width: 767.98px) {
+        width: 90%;
+        height: 100%;
+    }
 }
 
 @keyframes moveCoin {

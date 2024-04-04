@@ -2,7 +2,7 @@
 
 <template>
     <div class="layout">
-        <Header />
+        <Header/>
         <div class="content">
             <slot />
         </div>

@@ -34,7 +34,7 @@ const isDown = (value: number) => {
 
 
 <template>
-    <div style="width: 70%">
+    <div class="table-container">
         <DataView :value="data" v-if="data" unstyled>
             <template #header>
                 <div class="top">
@@ -88,6 +88,13 @@ const isDown = (value: number) => {
 <style scoped lang="scss">
 @import '@/assets/scss/main.scss';
 
+.table-container {
+    width: 70%;
+    @media (max-width: 767.98px) {
+        width: 100%;
+    }
+}
+
 .top {
     background-color: $bg-gray;
     border-top: 3px solid $border-gray;
@@ -107,6 +114,9 @@ const isDown = (value: number) => {
     justify-content: space-between;
     gap: 100px;
     background-color: $bg-gray;
+    @media (max-width: 767.98px) {
+        gap: 0;
+    }
 }
 
 .name-container {
@@ -114,6 +124,10 @@ const isDown = (value: number) => {
     justify-content: space-between;
     width: 30%;
     gap: 20px;
+    @media (max-width: 767.98px) {
+        gap: 0;
+        width: 40%;
+    }
 }
 
 .image-container {
@@ -121,10 +135,13 @@ const isDown = (value: number) => {
     justify-content: center;
     align-items: center;
     width: 30%;
+    @media (max-width: 767.98px) {
+        width: 50%;
+    }
 }
 
 .image {
-    width: 90%;
+    width: 100%;
 }
 
 .infos {
@@ -133,6 +150,11 @@ const isDown = (value: number) => {
     width: 70%;
     gap: 3px;
     padding: 10px;
+    @media (max-width: 767.98px) {
+        gap: 0;
+        margin-left: 10px;
+        width: 60%;
+    }
 }
 
 .name-infos {
@@ -145,15 +167,24 @@ const isDown = (value: number) => {
     font-size: 20px;
     font-weight: 600;
     letter-spacing: 2px;
+    @media (max-width: 767.98px) {
+        font-size: 15px;
+    }
 }
 
 .name {
     font-size: 12px;
     color: $text-gray;
+    @media (max-width: 767.98px) {
+        font-size: 10px;
+    }
 }
 
 .sector {
     font-weight: 600;
+    @media (max-width: 767.98px) {
+        font-size: 12px;
+    }
 }
 
 .change-container {
@@ -161,12 +192,19 @@ const isDown = (value: number) => {
     align-items: center;
     gap: 10px;
     width: 20%;
+    @media (max-width: 767.98px) {
+        gap: 3px;
+        width: 35%;
+    }
 }
 
 .change {
     font-size: 16px;
     font-weight: 600;
     letter-spacing: 1px;
+    @media (max-width: 767.98px) {
+        font-size: 12px;
+    }
 }
 
 .red-text {
@@ -183,5 +221,10 @@ const isDown = (value: number) => {
     justify-content: center;
     gap: 5px;
     width: 10%;
+    @media (max-width: 767.98px) {
+        gap: 3px;
+        width: 20%;
+        font-size: 12px;
+    }
 }
 </style>

@@ -17,7 +17,7 @@ const items = ref([
 </script>
 
 <template>
-    <div class="flex gap-8 mr-5">
+    <div class="menu-container">
         <div v-for="item in items" :key="item.label">
             <router-link :to="item.route" class="menu-items">
                 {{ item.label }}
@@ -28,6 +28,16 @@ const items = ref([
 
 <style scoped lang="scss">
 @import '@/assets/scss/main.scss';
+
+.menu-container {
+    display: flex;
+    gap: 60px;
+    margin-right: 50px;
+    @media (max-width: 767.98px) {
+        margin-right: 0;
+        gap: 20px;
+    }
+}
 
 .menu-items {
     font-weight: 300;
