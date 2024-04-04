@@ -8,6 +8,7 @@ export const useStore = defineStore('store', {
         quoteListFund: [] as Stock[],
         quoteListBDRs: [] as Stock[],
         dataTable: [] as Stock[],
+        clickedItem: {} as Stock,
     }),
     actions: {
         async getQuoteList(): Promise<void> {

@@ -85,7 +85,7 @@ const setChartOptions = () => {
                 <Card :length="store.quoteListStock.length" name="stocks" />
             </div>
             <div class="flex justify-content-center">
-                <Table />
+                <Table :data="store.dataTable" :use-pagination="false" :is-unstyled="true" :is-from-bdrs="false" />
             </div>
             <div class="chart-container">
                 <div class="flex flex-column gap-3">
@@ -99,6 +99,9 @@ const setChartOptions = () => {
                 <Chart type="line" :data="chartData" :options="chartOptions" class="chart" />
             </div>
         </div>
+        <Image src="luz-azul.png" alt="Image" width="1000" class="luz-azul-top-left"/>
+        <Image src="luz-azul.png" alt="Image" width="1000" class="luz-azul-middle-right"/>
+        <Image src="luz-azul.png" alt="Image" width="1000" class="luz-azul-bottom-left"/>
     </div>
 </template>
 
@@ -214,6 +217,37 @@ const setChartOptions = () => {
     @media (max-width: 767.98px) {
         width: 90%;
         height: 100%;
+    }
+}
+
+.luz-azul-top-left {
+    position: absolute;
+    top: -500px;
+    left: -600px;
+    z-index: -1;
+}
+
+.luz-azul-middle-right {
+    position: absolute;
+    bottom: -300px;
+    right: 0;
+    z-index: -1;
+    opacity: 0.2;
+}
+
+.luz-azul-bottom-left {
+    position: absolute;
+    left: -500px;
+    bottom: -1400px;
+    z-index: -1;
+    opacity: 0.2;
+}
+
+@media (max-width: 768px) {
+    .luz-azul-top-left,
+    .luz-azul-middle-right,
+    .luz-azul-bottom-left {
+        display: none;
     }
 }
 

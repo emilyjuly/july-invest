@@ -1,13 +1,19 @@
 <script setup lang="ts">
-import {useStore} from "~/stores";
 import { ref, onMounted } from 'vue'
+import { useStore } from "~/stores";
 
-const store = useStore();
-
+const store = useStore()
 const data = ref()
 
+const props = defineProps({
+    data: Object,
+    usePagination: Boolean,
+    isUnstyled: Boolean,
+    isFromBdrs: Boolean
+})
+
 onMounted(async () => {
-    data.value = await store.dataTable
+    data.value = await props.data
 })
 
 const getSeverity = (type: string) => {
@@ -35,14 +41,14 @@ const isDown = (value: number) => {
 
 <template>
     <div class="table-container">
-        <DataView :value="data" v-if="data" unstyled>
+        <DataView :value="data" v-if="data" :paginator="usePagination" :rows="5" :unstyled="isUnstyled">
             <template #header>
-                <div class="top">
+                <div :class="{'top': isUnstyled}">
                     <span class="top-title">Top markets</span>
                 </div>
             </template>
             <template #list="slotProps">
-                <div v-for="(item, index) in slotProps.items" :key="index" class="grid-container">
+                <div v-for="(item, index) in slotProps.items" :key="index" class="grid-container hover:bg-black-alpha-20" @click="store.clickedItem = item" :class="{'cursor-pointer hover' : isFromBdrs}">
                     <div class="name-container">
                         <div class="image-container">
                             <img class="image" v-if="item" :src="item.logo" :alt="item.name"/>
