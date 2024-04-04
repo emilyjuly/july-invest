@@ -1,7 +1,14 @@
 <script setup lang="ts">
 import {useStore} from "~/stores";
+import { ref, onMounted } from 'vue'
 
 const store = useStore();
+
+const data = ref()
+
+onMounted(async () => {
+    data.value = await store.dataTable
+})
 
 const getSeverity = (type: string) => {
     switch (type) {
@@ -22,12 +29,13 @@ const getSeverity = (type: string) => {
 const isDown = (value: number) => {
     return value < 0
 }
+
 </script>
 
 
 <template>
     <div style="width: 70%">
-        <DataView :value="store.dataTable" v-if="store.dataTable[0]" unstyled>
+        <DataView :value="data" v-if="data" unstyled>
             <template #header>
                 <div class="top">
                     <span class="top-title">Top markets</span>

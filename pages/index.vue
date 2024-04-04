@@ -3,7 +3,7 @@ import { useStore } from "~/stores/index.ts";
 import Chart from 'primevue/chart';
 import { ref, onMounted } from "vue";
 
-onMounted(() => {
+onMounted(async () => {
     chartData.value = setChartData();
     chartOptions.value = setChartOptions();
 })
@@ -13,7 +13,6 @@ const chartOptions = ref();
 
 const store = useStore();
 store.getDataTable()
-
 
 const setChartData = () => {
     const changeData = store.dataTable.map(item => item.change);
