@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useStore } from "~/stores";
+import apiGoogle from "~/services/api-google";
+import type {ClickedItem} from "~/interfaces/interfaces";
 
 const store = useStore()
 const data = ref()
@@ -36,6 +38,35 @@ const isDown = (value: number) => {
     return value < 0
 }
 
+const getClickedItem = async (item: ClickedItem) => {
+    const key: string = useRuntimeConfig().public.KEY;
+    const cx: string = useRuntimeConfig().public.CX;
+    const params = new URLSearchParams({
+        key: key,
+        cx: cx,
+        q: item.name,
+    });
+
+    const { data } = await apiGoogle.get(`/v1?${params}`);
+
+    const stockParams = new URLSearchParams({
+        key: key,
+        cx: cx,
+        q: item.stock,
+    });
+
+    const response = await apiGoogle.get(`/v1?${stockParams}`);
+
+    store.clickedItem = item;
+    store.clickedItem.link = data.items[0].displayLink;
+    store.clickedItem.description = data.items[0].snippet;
+    store.clickedItem.title = data.items[0].title;
+
+    store.clickedItem.linkStock = response.data.items[1].displayLink;
+    store.clickedItem.descriptionStock = response.data.items[1].snippet;
+    store.clickedItem.titleStock = response.data.items[1].title;
+}
+
 </script>
 
 
@@ -48,7 +79,7 @@ const isDown = (value: number) => {
                 </div>
             </template>
             <template #list="slotProps">
-                <div v-for="(item, index) in slotProps.items" :key="index" class="grid-container hover:bg-black-alpha-20" @click="store.clickedItem = item" :class="{'cursor-pointer hover' : isFromBdrs}">
+                <div v-for="(item, index) in slotProps.items" :key="index" class="grid-container" @click="getClickedItem(item)" :class="{'cursor-pointer hover:bg-black-alpha-20' : isFromBdrs}">
                     <div class="name-container">
                         <div class="image-container">
                             <img class="image" v-if="item" :src="item.logo" :alt="item.name"/>

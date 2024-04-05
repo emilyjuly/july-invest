@@ -1,6 +1,6 @@
 import {defineStore} from 'pinia';
-import api from '@/services/api';
-import {Stock, Data} from '~/interfaces/interfaces';
+import apiBrapi from '~/services/api-brapi';
+import {Stock, Data, ClickedItem} from '~/interfaces/interfaces';
 
 export const useStore = defineStore('store', {
     state: () => ({
@@ -8,7 +8,7 @@ export const useStore = defineStore('store', {
         quoteListFund: [] as Stock[],
         quoteListBDRs: [] as Stock[],
         dataTable: [] as Stock[],
-        clickedItem: {} as Stock,
+        clickedItem: {} as ClickedItem,
     }),
     actions: {
         async getQuoteList(): Promise<void> {
@@ -23,7 +23,7 @@ export const useStore = defineStore('store', {
             const url: string = `/quote/list?${queryParams}`;
 
             try {
-                const {data} = await api.get(url)
+                const {data} = await apiBrapi.get(url)
                 this.quoteListFund = this.filterQuotes('fund', data.stocks);
                 this.quoteListStock = this.filterQuotes('stock', data.stocks);
                 this.quoteListBDRs = this.filterQuotes('bdr', data.stocks);

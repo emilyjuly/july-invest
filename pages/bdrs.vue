@@ -16,7 +16,7 @@ const items = ref([
 </script>
 
 <template>
-    <div class="flex flex-column pt-3 pl-3 pr-3 container">
+    <div class="container">
         <div class="flex flex-column">
             <Divider />
             <Breadcrumb :home="home" :model="items" style="background-color: transparent">
@@ -33,10 +33,27 @@ const items = ref([
                 </template>
             </Breadcrumb>
         </div>
-        <div class="flex m-5 gap-3">
+        <div class="flex justify-content-between" >
             <Table :data="store.quoteListBDRs" :use-pagination="true" :is-unstyled="false" :is-from-bdrs="true" />
-            <div class="flex flex-column w-5">
+            <div class="flex flex-column align-items-center">
                 <QuoteCard />
+                <div class="card">
+                    <div class="box">
+                        <strong class="more-info">More informations</strong>
+                        <Divider />
+                        <strong>{{store.clickedItem.title}}</strong>
+                        <span class="mt-5 mb-3">{{store.clickedItem.description}}</span>
+                        <a :href="store.clickedItem.link" target="_blank">
+                            Learn more
+                        </a>
+                        <Divider />
+                        <strong>{{store.clickedItem.titleStock}}</strong>
+                        <span class="mt-5 mb-3">{{store.clickedItem.descriptionStock}}</span>
+                        <a :href="store.clickedItem.linkStock" target="_blank">
+                            Learn more
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
         <Image src="luz-azul.png" alt="Image" width="1000" class="luz-azul-top-left"/>
@@ -47,7 +64,16 @@ const items = ref([
 <style scoped lang="scss">
 @import "@/assets/scss/main";
 
+.more-info {
+    font-size: 20px;
+}
+
 .container {
+    display: flex;
+    flex-direction: column;
+    padding-top: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
     min-height: 100vh;
 }
 
@@ -70,6 +96,48 @@ const items = ref([
     opacity: 0.2;
 }
 
+.card {
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    width: 100%;
+    position: relative;
+}
+
+.card::before {
+    content: "";
+    background-color: rgba(0, 37, 199, 0.3);
+    position: absolute;
+}
+
+.card::before {
+    border-radius: 50%;
+    width: 6rem;
+    height: 6rem;
+    top: 30%;
+    right: 7%;
+}
+
+.card .box {
+    padding: 1rem;
+    background-color: $bg-gray;
+    border: 1px solid $border-gray;
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border-radius: 0.7rem;
+    transition: all ease 0.3s;
+}
+
+.card .box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.box:hover {
+    box-shadow: 0 0 20px 1px $blue;
+    border: 1px solid $blue;
+}
 
 @media (max-width: 768px) {
     .luz-azul-top-left,

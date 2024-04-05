@@ -17,6 +17,8 @@ export default defineNuxtConfig({
     runtimeConfig: {
         public: {
             API_TOKEN: process.env.API_TOKEN,
+            KEY: process.env.KEY,
+            CX: process.env.CX
         }
     }
 })

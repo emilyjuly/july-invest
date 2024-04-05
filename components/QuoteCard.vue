@@ -10,31 +10,41 @@ const isDown = (value: any) => {
 
 <template>
     <div class="quote-card">
-        <div v-if="store.clickedItem.name">
-            <div class="flex flex-column gap-3">
-                <strong>{{ store.clickedItem.stock }}</strong>
-                <span>{{ store.clickedItem.name }}</span>
-                <span>{{ store.clickedItem.sector }}</span>
-            </div>
-            <Image :src="store.clickedItem.logo" alt="Logo" width="200px" />
-            <div class="flex flex-column gap3">
-                <div class="flex align-items-center gap-2">
-                    <Image src="/down.png" alt="Imagem de gráfico caindo" width="20"
-                           v-if="isDown(store.clickedItem && store.clickedItem.change)"/>
-                    <Image src="/high.png" alt="Imagem de gráfico subindo" width="20"
-                           v-if="!isDown(store.clickedItem && store.clickedItem.change)"/>
-                    <span class="change" v-if="store.clickedItem"
-                          :class="{ 'red-text': isDown(store.clickedItem && store.clickedItem.change), 'green-text': !isDown(store.clickedItem && store.clickedItem.change) }">{{
-                            store.clickedItem && `${store.clickedItem.change}%`
-                        }}</span>
+        <div class="box">
+            <div v-if="store.clickedItem.name">
+                <div class="flex gap-5">
+                    <div class="logo-container">
+                        <Image class="logo" :src="store.clickedItem.logo" alt="Logo" width="200px" />
+                    </div>
+                    <div class="flex flex-column gap-3">
+                        <div class="flex flex-column gap-1">
+                            <strong class="stock">{{ store.clickedItem.stock }}</strong>
+                            <span class="name">{{ store.clickedItem.name }}</span>
+                            <span class="sector">{{ store.clickedItem.sector }}</span>
+                        </div>
+                        <div class="flex align-items-center gap-2">
+                            <Image src="/down.png" alt="Imagem de gráfico caindo" width="20"
+                                   v-if="isDown(store.clickedItem && store.clickedItem.change)"/>
+                            <Image src="/high.png" alt="Imagem de gráfico subindo" width="20"
+                                   v-if="!isDown(store.clickedItem && store.clickedItem.change)"/>
+                            <span class="change" v-if="store.clickedItem"
+                                  :class="{ 'red-text': isDown(store.clickedItem && store.clickedItem.change), 'green-text': !isDown(store.clickedItem && store.clickedItem.change) }">{{
+                                    store.clickedItem && `${store.clickedItem.change}%`
+                                }}</span>
+                        </div>
+                        <div class="flex flex-column gap-1">
+                            <strong>
+                                Volume: {{ store.clickedItem.volume }}
+                            </strong>
+                            <strong>Close: {{ store.clickedItem && `R$ ${store.clickedItem.close}` }}</strong>
+                            <strong>Market Cap: {{ store.clickedItem.market_cap }}</strong>
+                        </div>
+                    </div>
                 </div>
-                <span>{{ store.clickedItem.volume }}</span>
-                <span class="font-medium text-secondary text-sm">{{ store.clickedItem && `R$ ${store.clickedItem.close}` }}</span>
-                <span>{{ store.clickedItem.market_cap }}</span>
             </div>
-        </div>
-        <div v-else>
-            <span>Selecione um ativo para visualizar detalhes dele.</span>
+            <div v-else>
+                <span>Selecione um ativo para visualizar detalhes dele.</span>
+            </div>
         </div>
     </div>
 </template>
@@ -42,14 +52,74 @@ const isDown = (value: any) => {
 <style scoped lang="scss">
 @import '@/assets/scss/main';
 
+.stock {
+    font-size: 25px;
+}
+
+.name {
+    font-size: 12px;
+}
+
+.sector {
+    background-color: $text-gray;
+    padding: 5px;
+    border-radius: 3px;
+    color: white;
+    font-weight: bold;
+}
+
 .quote-card {
     display: flex;
     flex-direction: column;
     padding: 50px;
-    background-color: $bg-gray;
     width: 100%;
+    position: relative;
 }
 
+.quote-card::before,
+.quote-card::after {
+    content: "";
+    background-color: rgba(0, 37, 199, 0.3);
+    position: absolute;
+}
+
+.quote-card::before {
+    border-radius: 50%;
+    width: 6rem;
+    height: 6rem;
+    top: 30%;
+    right: 7%;
+}
+
+.quote-card::after {
+    content: "";
+    position: absolute;
+    height: 3rem;
+    top: 20%;
+    right: 10%;
+    border: 1px solid;
+}
+
+.quote-card .box {
+    padding: 1rem;
+    background-color: $bg-gray;
+    border: 1px solid $border-gray;
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border-radius: 0.7rem;
+    transition: all ease 0.3s;
+}
+
+.quote-card .box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.box:hover {
+    box-shadow: 0 0 20px 1px $blue;
+    border: 1px solid $blue;
+}
 
 .red-text {
     color: $red;
@@ -57,5 +127,12 @@ const isDown = (value: any) => {
 
 .green-text {
     color: $green;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
 }
 </style>
