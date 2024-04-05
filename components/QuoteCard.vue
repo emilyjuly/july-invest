@@ -9,9 +9,9 @@ const isDown = (value: any) => {
 </script>
 
 <template>
-    <div class="quote-card">
+    <div class="quote-card" v-if="store.clickedItem.name">
         <div class="box">
-            <div v-if="store.clickedItem.name">
+            <div>
                 <div class="flex gap-5">
                     <div class="logo-container">
                         <Image class="logo" :src="store.clickedItem.logo" alt="Logo" width="200px" />
@@ -41,9 +41,6 @@ const isDown = (value: any) => {
                         </div>
                     </div>
                 </div>
-            </div>
-            <div v-else>
-                <span>Selecione um ativo para visualizar detalhes dele.</span>
             </div>
         </div>
     </div>
@@ -102,6 +99,7 @@ const isDown = (value: any) => {
 
 .quote-card .box {
     padding: 1rem;
+    width: 100%;
     background-color: $bg-gray;
     border: 1px solid $border-gray;
     -webkit-backdrop-filter: blur(20px);
@@ -134,5 +132,9 @@ const isDown = (value: any) => {
 .logo-container {
     display: flex;
     justify-content: center;
+}
+
+.selecione {
+    font-weight: bold;
 }
 </style>

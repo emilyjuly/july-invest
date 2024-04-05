@@ -33,11 +33,13 @@ const items = ref([
                 </template>
             </Breadcrumb>
         </div>
-        <div class="flex justify-content-between" >
-            <Table :data="store.quoteListBDRs" :use-pagination="true" :is-unstyled="false" :is-from-bdrs="true" />
-            <div class="flex flex-column align-items-center">
-                <QuoteCard />
-                <div class="card">
+        <div class="container-page">
+            <div class="container-table">
+                <Table :data="store.quoteListBDRs" :use-pagination="true" :is-unstyled="false" :is-from-bdrs="true" class="w-full" />
+            </div>
+            <div class="container-cards" v-if="store.clickedItem.name">
+                <QuoteCard class="w-full" />
+                <div class="card" v-if="store.clickedItem.name">
                     <div class="box">
                         <strong class="more-info">More informations</strong>
                         <Divider />
@@ -55,6 +57,9 @@ const items = ref([
                     </div>
                 </div>
             </div>
+            <div class="container-cards" v-else>
+                <strong style="font-size: 20px;">Select an asset from the list below to see more information about it</strong>
+            </div>
         </div>
         <Image src="luz-azul.png" alt="Image" width="1000" class="luz-azul-top-left"/>
         <Image src="luz-azul.png" alt="Image" width="1000" class="luz-azul-middle-right"/>
@@ -63,6 +68,27 @@ const items = ref([
 
 <style scoped lang="scss">
 @import "@/assets/scss/main";
+
+.container-page {
+    display: flex;
+    justify-content: center;
+}
+
+.container-table {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    padding: 10px;
+}
+
+.container-cards {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
 
 .more-info {
     font-size: 20px;
@@ -75,6 +101,7 @@ const items = ref([
     padding-left: 30px;
     padding-right: 30px;
     min-height: 100vh;
+    margin-bottom: 100px;
 }
 
 .text-blue {
