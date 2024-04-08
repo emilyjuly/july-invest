@@ -20,7 +20,7 @@ const isDown = (value: any) => {
                         <div class="flex flex-column gap-1">
                             <strong class="stock">{{ store.clickedItem.stock }}</strong>
                             <span class="name">{{ store.clickedItem.name }}</span>
-                            <span class="sector">{{ store.clickedItem.sector }}</span>
+                            <span v-if="store.clickedItem.sector" class="sector">{{ store.clickedItem.sector }}</span>
                         </div>
                         <div class="flex align-items-center gap-2">
                             <Image src="/down.png" alt="Imagem de gráfico caindo" width="20"
@@ -33,11 +33,11 @@ const isDown = (value: any) => {
                                 }}</span>
                         </div>
                         <div class="flex flex-column gap-1">
-                            <strong>
+                            <strong v-if="store.clickedItem.volume">
                                 Volume: {{ store.clickedItem.volume }}
                             </strong>
-                            <strong>Close: {{ store.clickedItem && `R$ ${store.clickedItem.close}` }}</strong>
-                            <strong>Market Cap: {{ store.clickedItem.market_cap }}</strong>
+                            <strong v-if="store.clickedItem.close">Close: {{ store.clickedItem && `R$ ${store.clickedItem.close}` }}</strong>
+                            <strong v-if="store.clickedItem.market_cap">Market Cap: {{ store.clickedItem.market_cap }}</strong>
                         </div>
                     </div>
                 </div>
