@@ -1,21 +1,20 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { useStore } from "~/stores";
+import {ref, onMounted} from 'vue'
+import {useStore} from "~/stores";
 import apiGoogle from "~/services/api-google";
 import type {ClickedItem} from "~/interfaces/interfaces";
 
 const store = useStore()
-const data = ref()
+const search = ref('')
+
+const emits = defineEmits(['search']);
 
 const props = defineProps({
-    data: Object,
+    data: Array,
     usePagination: Boolean,
     isUnstyled: Boolean,
-    isFromBdrs: Boolean
-})
-
-onMounted(async () => {
-    data.value = await props.data
+    isFromBdrs: Boolean,
+    showSearchInput: Boolean,
 })
 
 const getSeverity = (type: string) => {
@@ -47,7 +46,7 @@ const getClickedItem = async (item: ClickedItem) => {
         q: item.name,
     });
 
-    const { data } = await apiGoogle.get(`/v1?${params}`);
+    const {data} = await apiGoogle.get(`/v1?${params}`);
 
     const stockParams = new URLSearchParams({
         key: key,
@@ -67,19 +66,32 @@ const getClickedItem = async (item: ClickedItem) => {
     store.clickedItem.titleStock = response.data.items[1].title;
 }
 
+const handleSearch = () => {
+    emits('search', search.value.toLowerCase())
+}
+
 </script>
 
 
 <template>
     <div class="table-container">
-        <DataView :value="data" v-if="data" :paginator="usePagination" :rows="5" :unstyled="isUnstyled">
+        <DataView :value="props.data" v-if="props.data" :paginator="usePagination" :rows="5" :unstyled="isUnstyled">
             <template #header>
-                <div :class="{'top': isUnstyled}">
+                <div class="flex justify-content-between align-items-center" :class="{'top': isUnstyled}">
                     <span class="top-title">Top markets</span>
+                    <span v-if="showSearchInput">
+                        <InputGroup>
+                            <InputGroupAddon>
+                                <i class="pi pi-search"></i>
+                            </InputGroupAddon>
+                            <InputText type="text" v-model="search" @input="handleSearch" placeholder="Search by stock name"/>
+                        </InputGroup>
+                    </span>
                 </div>
             </template>
             <template #list="slotProps">
-                <div v-for="(item, index) in slotProps.items" :key="index" class="grid-container" @click="getClickedItem(item)" :class="{'cursor-pointer hover:bg-black-alpha-20' : isFromBdrs}">
+                <div v-for="(item, index) in slotProps.items" :key="index" class="grid-container"
+                     @click="getClickedItem(item)" :class="{'cursor-pointer hover:bg-black-alpha-20' : isFromBdrs}">
                     <div class="name-container">
                         <div class="image-container">
                             <img class="image" v-if="item" :src="item.logo" :alt="item.name"/>

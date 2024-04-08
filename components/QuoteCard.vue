@@ -12,7 +12,7 @@ const isDown = (value: any) => {
     <div class="quote-card" v-if="store.clickedItem.name">
         <div class="box">
             <div>
-                <div class="flex gap-5">
+                <div class="container">
                     <div class="logo-container">
                         <Image class="logo" :src="store.clickedItem.logo" alt="Logo" width="200px" />
                     </div>
@@ -49,6 +49,14 @@ const isDown = (value: any) => {
 <style scoped lang="scss">
 @import '@/assets/scss/main';
 
+.container {
+    display: flex;
+    gap: 20px;
+    @media (max-width: 767.98px) {
+        flex-direction: column;
+    }
+}
+
 .stock {
     font-size: 25px;
 }
@@ -63,6 +71,9 @@ const isDown = (value: any) => {
     border-radius: 3px;
     color: white;
     font-weight: bold;
+    @media (max-width: 767.98px) {
+        width: 80%;
+    }
 }
 
 .quote-card {
@@ -95,6 +106,9 @@ const isDown = (value: any) => {
     top: 20%;
     right: 10%;
     border: 1px solid;
+    @media (max-width: 767.98px) {
+        right: 17%;
+    }
 }
 
 .quote-card .box {
@@ -132,9 +146,5 @@ const isDown = (value: any) => {
 .logo-container {
     display: flex;
     justify-content: center;
-}
-
-.selecione {
-    font-weight: bold;
 }
 </style>

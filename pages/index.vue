@@ -4,6 +4,8 @@ import Chart from 'primevue/chart';
 import { ref, onMounted } from "vue";
 
 onMounted(async () => {
+    await store.getQuoteList();
+    await store.getDataTable();
     chartData.value = setChartData();
     chartOptions.value = setChartOptions();
 })
@@ -85,7 +87,7 @@ const setChartOptions = () => {
                 <Card :length="store.quoteListStock.length" name="stocks" />
             </div>
             <div class="flex justify-content-center">
-                <Table :data="store.dataTable" :use-pagination="false" :is-unstyled="true" :is-from-bdrs="false" />
+                <Table v-if="store.dataTable[0]" :data="store.dataTable" :show-search-input="false" :use-pagination="false" :is-unstyled="true" :is-from-bdrs="false" />
             </div>
             <div class="chart-container">
                 <div class="flex flex-column gap-3">

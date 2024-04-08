@@ -1,8 +1,18 @@
 <script lang="ts" setup>
 import { useStore } from "~/stores";
-import {ref} from 'vue';
+import {onMounted, ref} from 'vue';
 
 const store = useStore();
+let filteredData = ref([]);
+
+onMounted(async () => {
+    if (store.quoteListBDRs.length === 0) {
+        await store.getQuoteList()
+    }
+
+    filteredData.value = [...store.quoteListBDRs]
+    store.clearClickedItem()
+})
 
 const home = ref({
     icon: 'pi pi-home',
@@ -12,6 +22,10 @@ const home = ref({
 const items = ref([
     { label: 'BDRs', route: '/bdrs' },
 ]);
+
+const handleSearch = (value) => {
+    filteredData.value = store.quoteListBDRs.filter(item => item.stock.toLowerCase().includes(value))
+}
 
 </script>
 
@@ -35,7 +49,7 @@ const items = ref([
         </div>
         <div class="container-page">
             <div class="container-table">
-                <Table :data="store.quoteListBDRs" :use-pagination="true" :is-unstyled="false" :is-from-bdrs="true" class="w-full" />
+                <Table @search="handleSearch" :data="filteredData" :show-search-input="true" :use-pagination="true" :is-unstyled="false" :is-from-bdrs="true" class="w-full" />
             </div>
             <div class="container-cards" v-if="store.clickedItem.name">
                 <QuoteCard class="w-full" />
@@ -72,6 +86,9 @@ const items = ref([
 .container-page {
     display: flex;
     justify-content: center;
+    @media (max-width: 767.98px) {
+        flex-direction: column;
+    }
 }
 
 .container-table {
@@ -79,6 +96,10 @@ const items = ref([
     justify-content: center;
     width: 50%;
     padding: 10px;
+    @media (max-width: 767.98px) {
+        width: 100%;
+        padding: 0;
+    }
 }
 
 .container-cards {
@@ -88,6 +109,10 @@ const items = ref([
     justify-content: center;
     align-items: center;
     padding: 10px;
+    @media (max-width: 767.98px) {
+        width: 100%;
+        padding: 0;
+    }
 }
 
 .more-info {
@@ -102,6 +127,9 @@ const items = ref([
     padding-right: 30px;
     min-height: 100vh;
     margin-bottom: 100px;
+    @media (max-width: 767.98px) {
+        padding: 0;
+    }
 }
 
 .text-blue {

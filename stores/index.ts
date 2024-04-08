@@ -11,6 +11,25 @@ export const useStore = defineStore('store', {
         clickedItem: {} as ClickedItem,
     }),
     actions: {
+        clearClickedItem(): void {
+            this.clickedItem = {
+                change: null,
+                close: null,
+                type: null,
+                link: null,
+                logo: null,
+                name: null,
+                sector: null,
+                description: null,
+                stock: null,
+                volume: null,
+                linkStock: null,
+                market_cap: null,
+                titleStock: null,
+                descriptionStock: null,
+                title: null,
+            }
+        },
         async getQuoteList(): Promise<void> {
             const token: string = useRuntimeConfig().public.API_TOKEN;
 
