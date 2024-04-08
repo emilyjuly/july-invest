@@ -52,23 +52,7 @@ const handleSearch = (value) => {
             </div>
             <div class="container-cards" v-if="store.clickedItem.name">
                 <QuoteCard class="w-full" />
-                <div class="card" v-if="store.clickedItem.name">
-                    <div class="box">
-                        <strong class="more-info">More informations</strong>
-                        <Divider />
-                        <strong>{{store.clickedItem.title}}</strong>
-                        <span class="mt-5 mb-3">{{store.clickedItem.description}}</span>
-                        <a :href="store.clickedItem.link" target="_blank">
-                            Learn more
-                        </a>
-                        <Divider />
-                        <strong>{{store.clickedItem.titleStock}}</strong>
-                        <span class="mt-5 mb-3">{{store.clickedItem.descriptionStock}}</span>
-                        <a :href="store.clickedItem.linkStock" target="_blank">
-                            Learn more
-                        </a>
-                    </div>
-                </div>
+                <InformationsCard class="w-full"/>
             </div>
             <div class="container-cards" v-else>
                 <strong style="font-size: 20px;">Select an asset from the list below to see more information about it</strong>
@@ -114,10 +98,6 @@ const handleSearch = (value) => {
     }
 }
 
-.more-info {
-    font-size: 20px;
-}
-
 .container {
     display: flex;
     flex-direction: column;
@@ -150,48 +130,6 @@ const handleSearch = (value) => {
     opacity: 0.2;
 }
 
-.card {
-    display: flex;
-    flex-direction: column;
-    padding: 50px;
-    width: 100%;
-    position: relative;
-}
-
-.card::before {
-    content: "";
-    background-color: rgba(0, 37, 199, 0.3);
-    position: absolute;
-}
-
-.card::before {
-    border-radius: 50%;
-    width: 6rem;
-    height: 6rem;
-    top: 30%;
-    right: 7%;
-}
-
-.card .box {
-    padding: 1rem;
-    background-color: $bg-gray;
-    border: 1px solid $border-gray;
-    -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
-    border-radius: 0.7rem;
-    transition: all ease 0.3s;
-}
-
-.card .box {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.box:hover {
-    box-shadow: 0 0 20px 1px $blue;
-    border: 1px solid $blue;
-}
 
 @media (max-width: 768px) {
     .luz-azul-top-left,

@@ -88,6 +88,8 @@
     font-size: 15px;
     @media (max-width: 767.98px) {
         font-size: 10px;
+        margin-top: 10px;
+        font-weight: bold;
     }
 }
 </style>

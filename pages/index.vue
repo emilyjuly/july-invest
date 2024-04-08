@@ -1,7 +1,7 @@
 <script setup>
-import { useStore } from "~/stores/index.ts";
+import { useStore } from '~/stores/index.ts';
 import Chart from 'primevue/chart';
-import { ref, onMounted } from "vue";
+import { ref, onMounted } from 'vue';
 
 onMounted(async () => {
     await store.getQuoteList();
@@ -14,7 +14,7 @@ const chartData = ref();
 const chartOptions = ref();
 
 const store = useStore();
-store.getDataTable()
+store.getDataTable();
 
 const setChartData = () => {
     const changeData = store.dataTable.map(item => item.change);
